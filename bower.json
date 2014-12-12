@@ -1,0 +1,21 @@
+{
+  "name": "",
+  "version": "1.0.0",
+  "authors": [
+    "Scott Wakefield <scott@clubstudio.co.uk>"
+  ],
+  "description": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "vendor/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "html5shiv": "~3.7.2"
+  }
+}
