@@ -2,6 +2,21 @@
 
 Kick start the development of a website or web application.
 
+## Alias
+
+To conveniently use this repo, I recommend adding the following alias to your .bash_aliases file:
+
+```
+function kickoff() {
+    echo "Cloning Kickoff repository..."
+    git clone git@bitbucket.org:club/kickoff.git .
+    echo "Removing .git directory..."
+    rm .git -r -f
+    echo "Done. Happy coding!"
+}
+```
+When you start a new project, just open a terminal window, type `kickoff` and hit return and the alias will pull in this repository and then remove the repos `.git` folder, allowing you to immediately initialise a new repository for your project without any faff.
+
 ## Assets
 
 The `/assets` directory provides a predefined directory structure that should be suitable for the vast majority of websites and applications.
