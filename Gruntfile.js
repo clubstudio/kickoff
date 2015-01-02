@@ -1,4 +1,5 @@
 module.exports = function(grunt) {
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         copy: {
@@ -82,28 +83,21 @@ module.exports = function(grunt) {
             },
             uglify: {
                 files: ['assets/js/**/*.js'],
-                tasks: ['uglify'],
+                tasks: ['js'],
                 options: {
                     spawn: false
                 }
             },
             sass: {
                 files: ['assets/sass/**/*.{scss,sass}'],
-                tasks: ['sass'],
-                options: {
-                    spawn: false
-                }
-            },
-            autoprefixer: {
-                files: ['public/css/*.css'],
-                tasks: ['autoprefixer'],
+                tasks: ['css'],
                 options: {
                     spawn: false
                 }
             },
             imagemin: {
                 files: ['assets/img/**/*.{png,jpg,gif,svg}'],
-                tasks: ['imagemin'],
+                tasks: ['images'],
                 options: {
                     spawn: false
                 }
@@ -111,13 +105,63 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-sass');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-autoprefixer');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-imagemin');
+    /* ======================================================================
+     * Tasks Registration
+     * ====================================================================== */
 
-    grunt.registerTask('default', ['watch']);
-    grunt.registerTask('build', ['copy', 'sass', 'autoprefixer', 'uglify', 'imagemin']);
+    /* ----------------------------------------------------------------------
+     * Default Task - Runs Watcher
+     * ---------------------------------------------------------------------- */
+
+    grunt.registerTask('default', [], function () {
+        grunt.loadNpmTasks('grunt-contrib-watch');
+
+        grunt.task.run('watch');
+    });
+
+    /* ----------------------------------------------------------------------
+     * Compile SASS and auto-prefix vendor prefixes
+     * ---------------------------------------------------------------------- */
+
+    grunt.registerTask('css', [], function () {
+        grunt.loadNpmTasks('grunt-sass');
+        grunt.loadNpmTasks('grunt-autoprefixer');
+
+        grunt.task.run('sass', 'autoprefixer');
+    });
+
+    /* ----------------------------------------------------------------------
+     * Javascript
+     * ---------------------------------------------------------------------- */
+
+    grunt.registerTask('js', [], function () {
+        grunt.loadNpmTasks('grunt-uglify');
+
+        grunt.task.run('uglify');
+    });
+
+    /* ----------------------------------------------------------------------
+     * Compress Images
+     * ---------------------------------------------------------------------- */
+
+    grunt.registerTask('images', [], function () {
+        grunt.loadNpmTasks('grunt-imagemin');
+
+        grunt.task.run('imagemin');
+    });
+
+    /* ----------------------------------------------------------------------
+     * Build - Runs all tasks
+     * ---------------------------------------------------------------------- */
+
+    grunt.registerTask('build', [], function () {
+        grunt.loadNpmTasks('grunt-contrib-copy');
+        grunt.loadNpmTasks('grunt-sass');
+        grunt.loadNpmTasks('grunt-autoprefixer');
+        grunt.loadNpmTasks('grunt-contrib-uglify');
+        grunt.loadNpmTasks('grunt-contrib-imagemin');
+
+        grunt.task.run('copy', 'sass', 'autoprefixer', 'uglify', 'imagemin');
+    });
+
 }
