@@ -2,6 +2,12 @@
 
 Kick start the development of a website or web application.
 
+## Getting Started
+
+Either clone this repo, or utilise the bash alias detailed below. If you plan on using any of the preconfigured Grunt tasks, make sure you run `npm install` first - this will pull in any required dependencies.
+
+That's it! You're good to go.
+
 ## Alias
 
 To conveniently use this repo, I recommend adding the following alias to your .bash_aliases file:
