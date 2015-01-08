@@ -24,7 +24,7 @@ module.exports = function(grunt) {
                     outputStyle: 'compressed'
                 },
                 files: {
-                    'public/css/project-name.css': 'assets/sass/project-name.scss'
+                    'public/css/project-name.css': 'resources/assets/sass/project-name.scss'
                 }
             }
         },
@@ -57,7 +57,7 @@ module.exports = function(grunt) {
             my_target: {
                 files: {
                     'public/js/main.min.js': [
-                        'assets/js/main.js'
+                        'resources/assets/js/main.js'
                     ]
                 }
             }
@@ -66,7 +66,7 @@ module.exports = function(grunt) {
             dynamic: {
                 files: [{
                     expand: true,
-                    cwd: 'assets/img/',
+                    cwd: 'resources/assets/img/',
                     src: ['**/*.{png,jpg,gif,svg}'],
                     dest: 'public/img/'
                 }]
@@ -82,21 +82,21 @@ module.exports = function(grunt) {
                 livereload: true
             },
             uglify: {
-                files: ['assets/js/**/*.js'],
+                files: ['resources/assets/js/**/*.js'],
                 tasks: ['js'],
                 options: {
                     spawn: false
                 }
             },
             sass: {
-                files: ['assets/sass/**/*.{scss,sass}'],
+                files: ['resources/assets/sass/**/*.{scss,sass}'],
                 tasks: ['css'],
                 options: {
                     spawn: false
                 }
             },
             imagemin: {
-                files: ['assets/img/**/*.{png,jpg,gif,svg}'],
+                files: ['resources/assets/img/**/*.{png,jpg,gif,svg}'],
                 tasks: ['images'],
                 options: {
                     spawn: false
@@ -145,7 +145,7 @@ module.exports = function(grunt) {
      * ---------------------------------------------------------------------- */
 
     grunt.registerTask('images', [], function () {
-        grunt.loadNpmTasks('grunt-imagemin');
+        grunt.loadNpmTasks('grunt-contrib-imagemin');
 
         grunt.task.run('imagemin');
     });
