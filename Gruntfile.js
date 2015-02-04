@@ -135,7 +135,7 @@ module.exports = function(grunt) {
      * ---------------------------------------------------------------------- */
 
     grunt.registerTask('js', [], function () {
-        grunt.loadNpmTasks('grunt-uglify');
+        grunt.loadNpmTasks('grunt-contrib-uglify');
 
         grunt.task.run('uglify');
     });
