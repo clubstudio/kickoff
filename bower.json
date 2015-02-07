@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "jquery": "~1.11.2",
-    "html5shiv": "~3.7.2"
+    "html5shiv": "~3.7.2",
+    "respond-minmax": "~1.4.2"
   }
 }
