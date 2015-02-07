@@ -15,7 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~2.1.1",
+    "jquery": "~1.11.2",
     "html5shiv": "~3.7.2"
   }
 }
