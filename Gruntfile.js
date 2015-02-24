@@ -12,7 +12,7 @@ module.exports = function(grunt) {
                         src: [
                             'jquery/dist/jquery.min.js',
                             'html5shiv/dist/html5shiv.min.js',
-                            'respond-minmax/dest/respond.min.js',
+                            'respond-minmax/dest/respond.min.js'
                         ],
                         dest: 'public/js/vendor/'
                     }
@@ -79,9 +79,6 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            options: {
-                livereload: true
-            },
             uglify: {
                 files: ['resources/assets/js/**/*.js'],
                 tasks: ['js'],
@@ -101,6 +98,16 @@ module.exports = function(grunt) {
                 tasks: ['images'],
                 options: {
                     spawn: false
+                }
+            },
+            livereload: {
+                files: [
+                    'resources/views/**/*.php',
+                    'public/css/**/*.css',
+                    'public/js/**/*.js'
+                ],
+                options: {
+                    livereload: true
                 }
             }
         }
