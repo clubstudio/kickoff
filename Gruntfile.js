@@ -37,6 +37,19 @@ module.exports = function(grunt) {
                 src: 'public/css/**/*.css'
             }
         },
+        cssmin: {
+            options: {
+                shorthandCompacting: false,
+                roundingPrecision: -1
+            },
+            target: {
+                files: {
+                    'public/css/project-name.css': [
+                        'public/css/project-name.css'
+                    ]
+                }
+            }
+        },
         cacheBust: {
             options: {
                 baseDir: 'public/',
@@ -127,8 +140,9 @@ module.exports = function(grunt) {
     grunt.registerTask('css', [], function () {
         grunt.loadNpmTasks('grunt-sass');
         grunt.loadNpmTasks('grunt-autoprefixer');
+        grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-        grunt.task.run('sass', 'autoprefixer');
+        grunt.task.run('sass', 'autoprefixer', 'cssmin');
     });
 
     /* ----------------------------------------------------------------------
