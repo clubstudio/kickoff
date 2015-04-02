@@ -1,0 +1,20 @@
+{
+    "name": "club/kickoff",
+    "description": "Kick-start your web project",
+    "authors": [
+        {
+            "name": "Scott Wakefield",
+            "email": "scott@clubstudio.co.uk"
+        }
+    ],
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@bitbucket.org:club/goods.git"
+        }
+    ],
+    "require": {
+        "club/goods": "dev-master"
+    }
+}
