@@ -1,6 +1,6 @@
 {
-  "name": "Kickoff",
-  "version": "1.0.0",
+  "name": "kickoff",
+  "version": "0.0.1",
   "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -16,6 +16,6 @@
     "grunt-filerev-assets": "^0.3.2",
     "grunt-sass": "^0.17.0"
   },
-  "author": "Scott Wakefield - Club Studio Ltd",
+  "author": "Scott Wakefield <scott@clubstudio.co.uk>",
   "license": "ISC"
 }

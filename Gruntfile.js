@@ -1,145 +1,189 @@
 module.exports = function(grunt) {
 
     grunt.initConfig({
-        package: grunt.file.readJSON('package.json'),
-        project: {
-            name: 'project-name',
-            manifest: 'resources/assets/assets.json'
+
+        /* ------------------------------------------------------------------
+         * Get project configuration
+         * ------------------------------------------------------------------ */
+
+        prj: grunt.file.readJSON('project.json'),
+
+        /* ------------------------------------------------------------------
+         * Clear any previously built files before rebuilding assets
+         * ------------------------------------------------------------------ */
+
+        clean: {
+            dist: [
+                '<%= prj.dirs.build.css %>',
+                '<%= prj.dirs.build.js %>',
+                '<%= prj.dirs.build.img %>',
+                '<%= prj.manifest %>'
+            ]
         },
-        dirs: {
-            components: 'vendor/bower_components',
-            assets: {
-                sass: 'resources/assets/sass',
-                img: 'resources/assets/img',
-                js: 'resources/assets/js',
-            },
-            templates: 'resources/views',
-            build: {
-                css: 'public/css',
-                js: 'public/js',
-                img: 'public/img'
-            }
-        },
-        clean: ['public/css', 'public/js', 'public/img'],
+
+        /* ------------------------------------------------------------------
+         * Copy any files/assets that can be used 'as is'
+         * ------------------------------------------------------------------ */
+
         copy: {
-            main: {
+            dist: {
                 files: [
                     {
                         expand: true,
                         flatten: true,
-                        cwd: '<%= dirs.components %>',
-                        src: [
-                            'jquery/dist/jquery.min.js',
-                            'html5shiv/dist/html5shiv.min.js',
-                            'respond-minmax/dest/respond.min.js'
-                        ],
-                        dest: '<%= dirs.build.js %>/vendor/'
+                        cwd: '<%= prj.dirs.components %>',
+                        src: '<%= prj.copy %>',
+                        dest: '<%= prj.dirs.build.js %>/vendor/'
                     }
                 ]
             }
         },
+
+        /* ------------------------------------------------------------------
+         * Compile SASS into CSS
+         * ------------------------------------------------------------------ */
+
         sass: {
             dist: {
-                options: {
-                    outputStyle: 'compressed'
-                },
-                files: {
-                    '<%= dirs.build.css %>/<%= project.name %>.css': '<%= dirs.assets.sass %>/<%= project.name %>.scss'
-                }
+                files: [{
+                    expand: true,
+                    cwd: '<%= prj.dirs.assets.sass %>',
+                    src: ['*.scss'],
+                    dest: '<%= prj.dirs.build.css %>',
+                    ext: '.css'
+                }]
             }
         },
+
+        /* ------------------------------------------------------------------
+         * Add vendor prefixes to compiled css
+         * ------------------------------------------------------------------ */
+
         autoprefixer: {
             options: {
                 browsers: ['last 2 versions', 'ie 8', 'ie 9']
             },
-            no_dest: {
-                src: '<%= dirs.build.css %>/**/*.css'
+            dist: {
+                src: '<%= prj.dirs.build.css %>/**/*.css'
             }
         },
+
+        /* ------------------------------------------------------------------
+         * Minify all CSS files
+         * ------------------------------------------------------------------ */
+
         cssmin: {
             options: {
                 shorthandCompacting: false,
                 roundingPrecision: -1
             },
-            target: {
+            dist: {
                 files: [{
                   expand: true,
-                  cwd: '<%= dirs.build.css %>',
+                  cwd: '<%= prj.dirs.build.css %>',
                   src: ['*.css'],
-                  dest: '<%= dirs.build.css %>',
+                  dest: '<%= prj.dirs.build.css %>',
                   ext: '.css'
                 }]
             }
         },
+
+        /* ------------------------------------------------------------------
+         * Concatenate and minify Javascript
+         * ------------------------------------------------------------------ */
+
         uglify: {
-            my_target: {
-                files: {
-                    '<%= dirs.build.js %>/main.js': [
-                        '<%= dirs.assets.js %>/main.js'
-                    ]
-                }
+            options: {
+                banner: '/*! <%= prj.name %> (<%= grunt.template.today("dd-mm-yyyy HH:MM:ss") %>) */\n'
+            },
+            dist: {
+                files: '<%= prj.js %>'
             }
         },
+
+        /* ------------------------------------------------------------------
+         * Add hash to built file names
+         * ------------------------------------------------------------------ */
+
         filerev: {
             options: {
                 algorithm: 'md5',
                 length: 8
             },
             css: {
-                src: '<%= dirs.build.css %>/**/*.css'
+                src: '<%= prj.dirs.build.css %>/**/*.css'
             },
             js: {
-                src: '<%= dirs.build.js %>/**/*.js'
+                src: '<%= prj.dirs.build.js %>/**/*.js'
             },
             images: {
-                src: '<%= dirs.build.img %>/**/*.{jpg,jpeg,gif,svg,png,webp}'
+                src: '<%= prj.dirs.build.img %>/**/*.{jpg,jpeg,gif,svg,png,webp}'
             }
         },
+
+        /* ------------------------------------------------------------------
+         * Write hashed file names to a manifest file
+         * ------------------------------------------------------------------ */
+
         filerev_assets: {
             dist: {
               options: {
-                  dest: '<%= project.manifest %>',
+                  dest: '<%= prj.manifest %>',
                   cwd: 'public/'
               }
             }
         },
+
+        /* ------------------------------------------------------------------
+         * Update any asset urls in CSS files to their hashed equivalent
+         * ------------------------------------------------------------------ */
+
         cssurlrev: {
             options: {
-                assets: '<%= project.manifest %>'
+                assets: '<%= prj.manifest %>'
             },
             files: {
-                src: ['<%= dirs.build.css %>/**/*.css'],
+                src: ['<%= prj.dirs.build.css %>/**/*.css'],
             },
         },
+
+        /* ------------------------------------------------------------------
+         * Optimise images
+         * ------------------------------------------------------------------ */
+
         imagemin: {
-            dynamic: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= dirs.assets.img %>',
-                    src: ['**/*.{png,jpg,gif,svg}'],
-                    dest: '<%= dirs.build.img %>'
-                }]
-            },
             options: {
-                cache: false,
                 optimizationLevel: 7,
                 progressive: true
+            },
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= prj.dirs.assets.img %>',
+                    src: ['**/*.{png,jpg,gif,svg}'],
+                    dest: '<%= prj.dirs.build.img %>'
+                }]
             }
         },
+
+        /* ------------------------------------------------------------------
+         * Watch for any file changes
+         * ------------------------------------------------------------------ */
+
         watch: {
             assets: {
                 files: [
-                    '<%= dirs.assets.js %>/**/*.js',
-                    '<%= dirs.assets.sass %>/**/*.{scss,sass}',
-                    '<%= dirs.assets.img %>/**/*.{png,jpg,gif,svg}'
+                    '<%= prj.dirs.assets.js %>/**/*.js',
+                    '<%= prj.dirs.assets.sass %>/**/*.{scss,sass}',
+                    '<%= prj.dirs.assets.img %>/**/*.{png,jpg,gif,svg}'
                 ],
-                tasks: ['build']
+                tasks: ['dev']
             },
             livereload: {
                 files: [
-                    '<%= dirs.templates %>/**/*.php',
-                    '<%= dirs.build.css %>/**/*.css',
-                    '<%= dirs.build.js %>/**/*.js'
+                    '<%= prj.dirs.templates %>/**/*.php',
+                    '<%= prj.dirs.build.css %>/**/*.css',
+                    '<%= prj.dirs.build.js %>/**/*.js'
                 ],
                 options: {
                     livereload: true
@@ -160,6 +204,16 @@ module.exports = function(grunt) {
         grunt.loadNpmTasks('grunt-contrib-watch');
 
         grunt.task.run('watch');
+    });
+
+    /* ----------------------------------------------------------------------
+     * Cleanup any previously built files
+     * ---------------------------------------------------------------------- */
+
+    grunt.registerTask('clean', [], function () {
+        grunt.loadNpmTasks('grunt-contrib-clean');
+
+        grunt.task.run('clean');
     });
 
     /* ----------------------------------------------------------------------
@@ -195,6 +249,26 @@ module.exports = function(grunt) {
     });
 
     /* ----------------------------------------------------------------------
+     * Development Task - called by 'watch'
+     * ---------------------------------------------------------------------- */
+
+    grunt.registerTask('dev', [], function () {
+        grunt.loadNpmTasks('grunt-contrib-clean');
+        grunt.loadNpmTasks('grunt-contrib-copy');
+        grunt.loadNpmTasks('grunt-sass');
+        grunt.loadNpmTasks('grunt-contrib-uglify');
+        grunt.loadNpmTasks('grunt-contrib-imagemin');
+
+        grunt.task.run([
+            'clean:dist',
+            'copy:dist',
+            'sass:dist',
+            'uglify:dist',
+            'imagemin:dist'
+        ]);
+    });
+
+    /* ----------------------------------------------------------------------
      * Build - Runs all tasks
      * ---------------------------------------------------------------------- */
 
@@ -205,21 +279,21 @@ module.exports = function(grunt) {
         grunt.loadNpmTasks('grunt-autoprefixer');
         grunt.loadNpmTasks('grunt-contrib-cssmin');
         grunt.loadNpmTasks('grunt-contrib-uglify');
+        grunt.loadNpmTasks('grunt-contrib-imagemin');
         grunt.loadNpmTasks('grunt-filerev');
         grunt.loadNpmTasks('grunt-filerev-assets');
         grunt.loadNpmTasks('grunt-cssurlrev');
-        grunt.loadNpmTasks('grunt-contrib-imagemin');
 
         grunt.task.run([
-            'clean',
-            'copy',
-            'sass',
-            'autoprefixer',
-            'cssmin',
-            'uglify',
-            'imagemin',
+            'clean:dist',
+            'copy:dist',
+            'sass:dist',
+            'autoprefixer:dist',
+            'cssmin:dist',
+            'uglify:dist',
+            'imagemin:dist',
             'filerev',
-            'filerev_assets',
+            'filerev_assets:dist',
             'cssurlrev'
         ]);
     });

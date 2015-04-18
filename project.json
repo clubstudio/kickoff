@@ -1,0 +1,32 @@
+{
+    "name" : "Kickoff - Project Kickstarter",
+
+    "js": {
+        "<%= prj.dirs.build.js %>/main.js": [
+            "<%= prj.dirs.assets.js %>/main.js"
+        ]
+    },
+
+    "copy": [
+        "jquery/dist/jquery.min.js",
+        "html5shiv/dist/html5shiv.min.js",
+        "respond-minmax/dest/respond.min.js"
+    ],
+
+    "manifest": "resources/assets/assets.json",
+
+    "dirs": {
+        "components": "vendor/bower_components",
+        "assets": {
+            "sass": "resources/assets/sass",
+            "img": "resources/assets/img",
+            "js": "resources/assets/js"
+        },
+        "templates": "resources/views",
+        "build": {
+            "css": "public/css",
+            "js": "public/js",
+            "img": "public/img"
+        }
+    }
+}
