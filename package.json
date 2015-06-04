@@ -1,7 +1,7 @@
 {
   "name": "kickoff",
   "version": "1.0.0",
-  "description": "Kick start the development of your website.",
+  "description": "Kick start the development of a website or web application.",
   "main": "gulpfile.js",
   "devDependencies": {
     "del": "^1.1.1",
@@ -18,16 +18,11 @@
     "gulp-uglify": "^1.2.0",
     "gulp-watch": "^4.2.4",
     "imagemin-pngquant": "^4.1.0",
-    "run-sequence": "^1.1.0",
-    "try-thread-sleep": "^1.0.0"
+    "run-sequence": "^1.1.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@bitbucket.org:club/kickoff.git"
-  },
-  "author": "Club Studio Ltd <dev@clubstudio.co.uk>",
+  "author": "Scott Wakefield <scott@clubstudio.co.uk>",
   "license": "ISC"
 }
