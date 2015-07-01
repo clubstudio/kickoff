@@ -46,8 +46,8 @@ gulp.task('copy-components', function() {
     return gulp.src(config.components, {
         cwd: config.dirs.components
     })
-        .pipe(uglify())
-        .pipe(gulp.dest(config.dirs.build.js + '/vendor'));
+    .pipe(uglify())
+    .pipe(gulp.dest(config.dirs.build.js + '/vendor'));
 });
 
 gulp.task('copy-fonts', function() {
@@ -72,9 +72,9 @@ gulp.task('sass', function() {
 
 gulp.task('autoprefixer', function() {
     return gulp.src(config.dirs.build.css + '/**/*.css')
-        .pipe(prefixer({
-        browsers: ['last 2 versions', 'ie 8', 'ie 9']
-    }))
+            .pipe(prefixer({
+            browsers: ['last 2 versions', 'ie 8', 'ie 9']
+        }))
         .pipe(gulp.dest(config.dirs.build.css));
 });
 
@@ -84,9 +84,9 @@ gulp.task('autoprefixer', function() {
 
 gulp.task('minify-css', function() {
     return gulp.src(config.dirs.build.css + '/**/*.css')
-        .pipe(minifyCss({
-        compatibility: 'ie8'
-    }))
+            .pipe(minifyCss({
+            compatibility: 'ie8'
+        }))
         .pipe(gulp.dest(config.dirs.build.css));
 });
 
@@ -110,13 +110,13 @@ gulp.task('uglify', function() {
 
 gulp.task('imagemin', function() {
     return gulp.src(config.dirs.assets.img + '/**/*')
-        .pipe(imagemin({
-        progressive: true,
-        svgoPlugins: [{
-            removeViewBox: false
-        }],
-        use: [pngquant()]
-    }))
+            .pipe(imagemin({
+            progressive: true,
+            svgoPlugins: [{
+                removeViewBox: false
+            }],
+            use: [pngquant()]
+        }))
         .pipe(gulp.dest(config.dirs.build.img));
 });
 
@@ -129,27 +129,20 @@ gulp.task('imagemin', function() {
 
 gulp.task('rev', function() {
     return gulp.src(
-    [
-    config.dirs.build.css + '/**/*.css',
-    config.dirs.build.js + '/**/*.js',
-    config.dirs.build.img + '/**/*.{png,jpg,gif,svg}'], {
-        base: path.join(process.cwd(), config.dirs.build.root)
-    })
+            [
+                config.dirs.build.css + '/**/*.css',
+                config.dirs.build.js + '/**/*.js',
+                config.dirs.build.img + '/**/*.{png,jpg,gif,svg}'
+            ], {
+                base: path.join(process.cwd(), config.dirs.build.root)
+            }
+        )
         .pipe(rev())
         .pipe(override())
         .pipe(gulp.dest(config.dirs.build.root))
         .pipe(revNapkin())
         .pipe(rev.manifest('assets.json'))
         .pipe(gulp.dest(config.dirs.assets.root));
-});
-
-/* --------------------------------------------------------------------------
- * Live reload any changes to templates/views
- * -------------------------------------------------------------------------- */
-
-gulp.task('templates', function() {
-    return gulp.src(config.dirs.templates + '/**/*.{html,twig,php}')
-        .pipe(livereload());
 });
 
 /* --------------------------------------------------------------------------
@@ -162,7 +155,10 @@ gulp.task('watch', function() {
     gulp.watch(config.dirs.assets.sass + '/**/*.{scss,sass}', ['sass']);
     gulp.watch(config.dirs.assets.js + '/**/*.js', ['uglify']);
     gulp.watch(config.dirs.assets.img + '/**/*.{png,jpg,gif,svg}', ['imagemin']);
-    gulp.watch(config.dirs.templates + '/**/*.{html,twig,php}', ['templates']);
+
+    gulp.watch(config.dirs.templates + '/**/*.{html,twig,php}').on('change', function (file) {
+        livereload.changed(file.path);
+    });
 });
 
 /* --------------------------------------------------------------------------
@@ -178,7 +174,15 @@ gulp.task('watch', function() {
  * -------------------------------------------------------------------------- */
 
 gulp.task('build', function() {
-    return sequence('clean', 'copy-components', 'copy-fonts', ['sass', 'imagemin', 'uglify'], 'autoprefixer', 'minify-css', 'rev')
+    return sequence(
+        'clean',
+        'copy-components',
+        'copy-fonts',
+        ['sass', 'imagemin', 'uglify'],
+        'autoprefixer',
+        'minify-css',
+        'rev'
+    )
 });
 
 /* --------------------------------------------------------------------------
@@ -190,5 +194,11 @@ gulp.task('build', function() {
  * -------------------------------------------------------------------------- */
 
 gulp.task('default', function() {
-    return sequence('clean', 'copy-components', 'copy-fonts', ['sass', 'uglify', 'imagemin'], 'watch');
+    return sequence(
+        'clean',
+        'copy-components',
+        'copy-fonts',
+        ['sass', 'uglify', 'imagemin'],
+        'watch'
+    );
 });
