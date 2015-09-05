@@ -1,3 +1,5 @@
+'use strict';
+
 /* --------------------------------------------------------------------------
  * Get project configuration
  * -------------------------------------------------------------------------- */
@@ -11,6 +13,7 @@ var config = require('./project.json');
 var gulp = require('gulp'),
     del = require('del'),
     sass = require('gulp-sass'),
+    sourcemaps = require('gulp-sourcemaps'),
     prefixer = require('gulp-autoprefixer'),
     minifyCss = require('gulp-minify-css'),
     uglify = require('gulp-uglify'),
@@ -45,10 +48,10 @@ gulp.task('clean', function () {
 
 gulp.task('copy-components', function () {
     return gulp.src(config.components, {
-        cwd: config.dirs.components
-    })
-    .pipe(uglify())
-    .pipe(gulp.dest(config.dirs.build.js + '/vendor'));
+            cwd: config.dirs.components
+        })
+        .pipe(uglify())
+        .pipe(gulp.dest(config.dirs.build.js + '/vendor'));
 });
 
 gulp.task('copy-fonts', function () {
@@ -62,9 +65,11 @@ gulp.task('copy-fonts', function () {
 
 gulp.task('sass', function () {
     return gulp.src(config.dirs.assets.sass + '/**/*.{scss,sass}')
+        .pipe(sourcemaps.init())
         .pipe(sass({
             errLogToConsole: true
         }))
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.dirs.build.css))
         .pipe(livereload());
 });
@@ -75,7 +80,7 @@ gulp.task('sass', function () {
 
 gulp.task('autoprefixer', function () {
     return gulp.src(config.dirs.build.css + '/**/*.css')
-            .pipe(prefixer({
+        .pipe(prefixer({
             browsers: ['last 2 versions', 'ie 8', 'ie 9']
         }))
         .pipe(gulp.dest(config.dirs.build.css));
