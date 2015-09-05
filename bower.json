@@ -1,22 +1,23 @@
 {
-  "name": "kickoff",
-  "version": "1.0.0",
-  "authors": [
-    "Club Studio Ltd <dev@clubstudio.co.uk>"
-  ],
+  "name": "club-kickoff",
   "description": "Kick start the development of a website.",
   "license": "MIT",
-  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
     "vendor/bower_components",
-    "test",
     "tests"
+  ],
+  "authors": [
+    "Club Studio Ltd <dev@clubstudio.co.uk>"
   ],
   "dependencies": {
     "jquery": "~1.11.2",
     "html5shiv": "~3.7.2",
     "respond-minmax": "~1.4.2"
-  }
+  },
+  "devDependencies": {
+
+  },
+  "private": true
 }
