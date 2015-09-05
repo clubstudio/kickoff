@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Kick start the development of a website or web application.",
   "main": "gulpfile.js",
+  "repository": "bitbucket:club/getup",
   "devDependencies": {
     "del": "^1.1.1",
     "gulp": "^3.8.11",
@@ -23,6 +24,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Scott Wakefield <scott@clubstudio.co.uk>",
-  "license": "ISC"
+  "author": "Club Studio Ltd <dev@clubstudio.co.uk>",
+  "license": "MIT"
 }
