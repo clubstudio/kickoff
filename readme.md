@@ -86,6 +86,7 @@ Project specific files and folders to be ignored. The contents of this file is m
 
 If there isn't a global .gitignore file setup, here are some example additional entries for this file:
 
+```
   # OS Files
   .DS_Store
   .DS_Store?
@@ -94,6 +95,7 @@ If there isn't a global .gitignore file setup, here are some example additional 
   # Web
   /.idea
   composer.phar
+```
 
 ### gulpfile.js
 
