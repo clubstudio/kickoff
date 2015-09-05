@@ -87,14 +87,14 @@ Project specific files and folders to be ignored. The contents of this file is m
 If there isn't a global .gitignore file setup, here are some example additional entries for this file:
 
 ```
-  # OS Files
-  .DS_Store
-  .DS_Store?
-  Thumbs.db
+# OS Files
+.DS_Store
+.DS_Store?
+Thumbs.db
 
-  # Web
-  /.idea
-  composer.phar
+# Web
+/.idea
+composer.phar
 ```
 
 ### gulpfile.js
