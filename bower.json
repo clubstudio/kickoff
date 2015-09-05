@@ -12,6 +12,7 @@
     "Club Studio Ltd <dev@clubstudio.co.uk>"
   ],
   "dependencies": {
+    "getup": "git@bitbucket.org:club/getup.git~2.0.0",
     "jquery": "~1.11.2",
     "html5shiv": "~3.7.2",
     "respond-minmax": "~1.4.2"
