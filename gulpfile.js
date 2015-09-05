@@ -35,7 +35,7 @@ gulp.task('clean', function () {
         config.dirs.build.js,
         config.dirs.build.img,
         config.dirs.build.root + '/fonts',
-        config.manifest
+        config.manifest.path + '/' + config.manifest.filename
     ]);
 });
 
@@ -143,7 +143,7 @@ gulp.task('rev', function () {
         .pipe(override())
         .pipe(gulp.dest(config.dirs.build.root))
         .pipe(revNapkin())
-        .pipe(rev.manifest('assets.json'))
+        .pipe(rev.manifest(config.manifest.filename))
         .pipe(gulp.dest(config.dirs.assets.root));
 });
 

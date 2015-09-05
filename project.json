@@ -19,7 +19,10 @@
         ]
     },
 
-    "manifest": "resources/assets/assets.json",
+    "manifest": {
+        "path": "resources/assets",
+        "filename": "assets.json"
+    },
 
     "dirs": {
         "components": "vendor/bower_components",
