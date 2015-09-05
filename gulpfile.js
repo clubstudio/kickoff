@@ -114,12 +114,14 @@ gulp.task('uglify', function () {
 
 gulp.task('imagemin', function () {
     return gulp.src(config.dirs.assets.img + '/**/*')
-            .pipe(imagemin({
+        .pipe(imagemin({
             progressive: true,
             svgoPlugins: [{
                 removeViewBox: false
             }],
-            use: [pngquant()]
+            use: [
+                pngquant()
+            ]
         }))
         .pipe(gulp.dest(config.dirs.build.img));
 });
