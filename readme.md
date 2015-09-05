@@ -4,7 +4,7 @@ Kick start the development of a website or web application.
 
 ## Getting Started
 
-Either clone this repo, or utilise the bash alias detailed below. If you plan on using any of the preconfigured Grunt tasks, make sure you run `npm install` first - this will pull in any required dependencies.
+Either clone this repo, or utilise the bash alias detailed below. If you plan on using any of the preconfigured Gulp tasks, make sure you run `npm install` first - this will pull in any required dependencies.
 
 That's it! You're good to go.
 
@@ -21,7 +21,7 @@ function kickoff() {
     echo "Done. Happy coding!"
 }
 ```
-When you start a new project, just open a terminal window, type `kickoff` and hit return and the alias will pull in this repository and then remove the repos `.git` folder, allowing you to immediately initialise a new repository for your project without any faff.
+When you start a new project, just open a terminal window, type `kickoff` and hit return and the alias will pull in this repository to the current directory and then remove the repos `.git` folder, allowing you to immediately initialise a new Git repository for your project without any faff.
 
 ## Assets
 
@@ -42,29 +42,31 @@ By default, `/assets` includes the following directories:
 
     `_base.scss` - None layout, theme specific style go here.
 
+  * **/config**
+
     `_config.scss` - Define any SASS variables for use throughout the project in this file.
 
-    `_getup.scss` - A single point for pulling in Club Getup files.
+  * **/components**
 
-  * **/partials**
+    Styles for individual site elements that are used to build up pages should be placed here.
 
-    Styles for individual site elements that are used to build up pages live here.
-
-  * **/shared**
+  * **/helpers**
 
     Mixins and functions should be placed here. By default blank `_mixins.scss` and `_funcions.scss` files are included for convenience.
 
   * **/vendor**
 
+      `_getup.scss` - A single point for pulling in Club Getup files.
+
     This would generally contain any vendor styles that need to manually be included, because they're not available via Bower.
 
-  * **project-name.scss**
+  * **main.scss**
 
-    The project's core stylesheet. Each of the files from the subfolders should be included within this file.
+    The project's core stylesheet. Each file from the subfolders should be included within this file. Placing CSS in this file is not recommended.
 
 ## Public
 
-The webroot of the application. A sample `.htaccess` is included for Apache server setups, which will route all requests through index.php.
+The web root of the application.
 
 A sample `robots.txt` file is also included for convenience.
 
@@ -80,49 +82,51 @@ Settings to normalise line endings within the Git repository.
 
 ### .gitignore
 
-Project specific files and folders to be ignored. The contents of this file is quite minimal because the majority of standard ignores should be set within a global .gitignore file.
+Project specific files and folders to be ignored. The contents of this file is minimal because the majority of standard ignores should be set within a global .gitignore file.
 
 If there isn't a global .gitignore file setup, here are some example additional entries for this file:
 
-	# OS Files
-	.DS_Store
-	.DS_Store?
-	Thumbs.db
+  # OS Files
+  .DS_Store
+  .DS_Store?
+  Thumbs.db
 
-	# Web
-	/.idea
-	composer.lock
-	composer.phar
+  # Web
+  /.idea
+  composer.phar
 
-### Gruntfile.js
+### gulpfile.js
 
 Responsible for building the site assets ready for deployment.
 
-#### Preconfigured Grunt Tasks:
+#### Preconfigured Gulp Tasks:
 
-##### copy ([grunt-contrib-copy](https://github.com/gruntjs/grunt-contrib-copy))
+##### clean ([gulp-clean]())
+This task will delete any previously built assets from the build directories specified in the `project.json` file.
 
-Copies bower dependencies from the `vendor/bower_components` directory to `public/js/vendor`. By default this includes jQuery (because you'll probably always need this) and HTML5Shiv for enabling styling of HTML5 elements in < IE9.
+##### copy-components
 
-##### sass ([grunt-sass](https://github.com/sindresorhus/grunt-sass))
+Copies bower dependencies (as defined in `project.son`) from the `vendor/bower_components` directory to `public/js/vendor`. It will run any JS files through the `uglify` task to ensure they are minimised.
+
+##### sass ([gulp-sass]())
 
 Compiles SASS/SCSS from `resources/assets/sass` to CSS in `public/css`.
 
-##### autoprefixer ([grunt-autoprefixer](https://github.com/nDmitry/grunt-autoprefixer))
+##### autoprefixer ([gulp-autoprefixer]())
 
 Automatically adds vendor prefixes to compiled CSS.
 
-##### uglify ([grunt-contrib-uglify](https://github.com/gruntjs/grunt-contrib-uglify))
+##### uglify ([gulp-uglify]())
 
 Minifies source Javascript from `resources/assets/js` with UglifyJS.
 
-##### imagemin ([grunt-contrib-imagemin](https://github.com/gruntjs/grunt-contrib-imagemin))
+##### imagemin ([gulp-imagemin]())
 
-Minfies images from `resources/assets/img` and saves them in `public/img`. The default optimisation level is set at `7`.
+Minifies images from `resources/assets/img` and saves them in `public/img`.
 
-##### watch ([grunt-contrib-watch](https://github.com/gruntjs/grunt-contrib-watch))
+##### watch ([gulp-watch]())
 
-Runs Grunt tasks when certain files are added, changed or deleted.
+Runs Gulp tasks when certain files are added, changed or deleted.
 
 By default the watch task is configured to run the following tasks:
 
@@ -133,11 +137,9 @@ Watched Files                                 | Task
 `resources/assets/img/**/*.{png,jpg,gif,svg}` | imagemin
 `public/css/**/*.css`                         | autoprefixer
 
-Running `grunt` on the command line will run the watch task by default.
-
 ##### Build
 
-This task will run the following grunt tasks: copy, sass, autoprefixer, uglify and imagemin. This would generally be used before deploying to ensure that all assets have been processed.
+This task will run the following grunt tasks: `copy-components`, `sass`, `autoprefixer`, `uglify` and `imagemin`. This would generally be used before deploying to ensure that all assets have been processed.
 
 ### bower.json
 
@@ -145,4 +147,4 @@ Defines the default Bower dependencies. These are jQuery and HTML5shiv.
 
 ### package.json
 
-Defines the dependecies required by Grunt for the tasks outlined above.
+Defines the dependencies required by Gulp for the tasks outlined above.
