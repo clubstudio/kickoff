@@ -3,8 +3,8 @@
     "description": "Kick-start your web project",
     "authors": [
         {
-            "name": "Scott Wakefield",
-            "email": "scott@clubstudio.co.uk"
+            "name": "Club Studio Ltd",
+            "email": "dev@clubstudio.co.uk"
         }
     ],
     "minimum-stability": "dev",
