@@ -29,20 +29,21 @@ var gulp = require('gulp'),
  * Clear any previously built files before rebuilding assets
  * -------------------------------------------------------------------------- */
 
-gulp.task('clean', function() {
+gulp.task('clean', function () {
     return del.sync([
-    config.dirs.build.css,
-    config.dirs.build.js,
-    config.dirs.build.img,
-    config.dirs.build.root + '/fonts',
-    config.manifest]);
+        config.dirs.build.css,
+        config.dirs.build.js,
+        config.dirs.build.img,
+        config.dirs.build.root + '/fonts',
+        config.manifest
+    ]);
 });
 
 /* --------------------------------------------------------------------------
  * Copy and minify any bower components
  * -------------------------------------------------------------------------- */
 
-gulp.task('copy-components', function() {
+gulp.task('copy-components', function () {
     return gulp.src(config.components, {
         cwd: config.dirs.components
     })
@@ -50,16 +51,16 @@ gulp.task('copy-components', function() {
     .pipe(gulp.dest(config.dirs.build.js + '/vendor'));
 });
 
-gulp.task('copy-fonts', function() {
+gulp.task('copy-fonts', function () {
     return gulp.src(config.fonts)
-        .pipe(gulp.dest(config.dirs.build.root + '/fonts'))
+        .pipe(gulp.dest(config.dirs.build.root + '/fonts'));
 });
 
 /* ---------------------------------------------------------------------------
  * Compile SASS into CSS
  * -------------------------------------------------------------------------- */
 
-gulp.task('sass', function() {
+gulp.task('sass', function () {
     return gulp.src(config.dirs.assets.sass + '/**/*.{scss,sass}')
         .pipe(sass())
         .pipe(gulp.dest(config.dirs.build.css))
@@ -70,7 +71,7 @@ gulp.task('sass', function() {
  * Add vendor prefixes to compiled css
  * -------------------------------------------------------------------------- */
 
-gulp.task('autoprefixer', function() {
+gulp.task('autoprefixer', function () {
     return gulp.src(config.dirs.build.css + '/**/*.css')
             .pipe(prefixer({
             browsers: ['last 2 versions', 'ie 8', 'ie 9']
@@ -82,9 +83,9 @@ gulp.task('autoprefixer', function() {
  * Minify all CSS files
  * -------------------------------------------------------------------------- */
 
-gulp.task('minify-css', function() {
+gulp.task('minify-css', function () {
     return gulp.src(config.dirs.build.css + '/**/*.css')
-            .pipe(minifyCss({
+        .pipe(minifyCss({
             compatibility: 'ie8'
         }))
         .pipe(gulp.dest(config.dirs.build.css));
@@ -94,21 +95,22 @@ gulp.task('minify-css', function() {
  * Concatenate and minify Javascript
  * -------------------------------------------------------------------------- */
 
-gulp.task('uglify', function() {
+gulp.task('uglify', function () {
     for (var key in config.js) {
         gulp.src(config.js[key])
             .pipe(uglify())
             .pipe(concat(key))
-            .pipe(gulp.dest(config.dirs.build.js))
-            .pipe(livereload());
+            .pipe(gulp.dest(config.dirs.build.js));
     }
+
+    livereload.reload();
 });
 
 /* --------------------------------------------------------------------------
  * Optimise images
  * -------------------------------------------------------------------------- */
 
-gulp.task('imagemin', function() {
+gulp.task('imagemin', function () {
     return gulp.src(config.dirs.assets.img + '/**/*')
             .pipe(imagemin({
             progressive: true,
@@ -127,7 +129,7 @@ gulp.task('imagemin', function() {
  *     3. Generate assets manifest file
  * -------------------------------------------------------------------------- */
 
-gulp.task('rev', function() {
+gulp.task('rev', function () {
     return gulp.src(
             [
                 config.dirs.build.css + '/**/*.css',
@@ -149,7 +151,7 @@ gulp.task('rev', function() {
  * Watch for any file changes
  * -------------------------------------------------------------------------- */
 
-gulp.task('watch', function() {
+gulp.task('watch', function () {
     livereload.listen();
 
     gulp.watch(config.dirs.assets.sass + '/**/*.{scss,sass}', ['sass']);
@@ -173,7 +175,7 @@ gulp.task('watch', function() {
  *     8. Add hashes to asset filenames
  * -------------------------------------------------------------------------- */
 
-gulp.task('build', function() {
+gulp.task('build', function () {
     return sequence(
         'clean',
         'copy-components',
@@ -182,7 +184,7 @@ gulp.task('build', function() {
         'autoprefixer',
         'minify-css',
         'rev'
-    )
+    );
 });
 
 /* --------------------------------------------------------------------------
@@ -193,7 +195,7 @@ gulp.task('build', function() {
  *     4. Watches for any changes...
  * -------------------------------------------------------------------------- */
 
-gulp.task('default', function() {
+gulp.task('default', function () {
     return sequence(
         'clean',
         'copy-components',
