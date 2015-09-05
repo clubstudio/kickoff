@@ -62,7 +62,9 @@ gulp.task('copy-fonts', function () {
 
 gulp.task('sass', function () {
     return gulp.src(config.dirs.assets.sass + '/**/*.{scss,sass}')
-        .pipe(sass())
+        .pipe(sass({
+            errLogToConsole: true
+        }))
         .pipe(gulp.dest(config.dirs.build.css))
         .pipe(livereload());
 });
