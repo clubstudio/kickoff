@@ -31,11 +31,11 @@ By default, `/assets` includes the following directories:
 
 * **/img**
 
-  All images used within stylesheets are to to placed here. They will automatically be optimised and moved to `public/img` by the `imagemin` Grunt task.
+  All images used within stylesheets are to to placed here. They will automatically be optimised and moved to `public/img` by the `imagemin` Gulp task.
 
 * **/js**
 
-  Javascript goes here. The Grunt task `uglify` will concatenate and minify these files in accordance with the task settings within `Gruntfile.js`.
+  Javascript goes here. The Gulp task `uglify` will concatenate and minify these files in accordance with the task settings within `gulpfile.js`.
 
 * **/sass**
   * **/base**
@@ -141,7 +141,7 @@ Watched Files                                 | Task
 
 ##### Build
 
-This task will run the following grunt tasks: `copy-components`, `sass`, `autoprefixer`, `uglify` and `imagemin`. This would generally be used before deploying to ensure that all assets have been processed.
+This task will run the following gulp tasks: `copy-components`, `sass`, `autoprefixer`, `uglify` and `imagemin`. This would generally be used before deploying to ensure that all assets have been processed.
 
 ### bower.json
 
