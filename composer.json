@@ -8,5 +8,9 @@
             "name": "Club Studio Ltd",
             "email": "dev@clubstudio.co.uk"
         }
-    ]
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "vlucas/phpdotenv": "~1.1.0"
+    }
 }
