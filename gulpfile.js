@@ -69,10 +69,10 @@ gulp.task('sass', function () {
         .pipe(sass({
             errLogToConsole: true
         }))
-        .pipe(sourcemaps.write())
         .pipe(prefixer({
             browsers: ['last 2 versions', 'ie 8', 'ie 9']
         }))
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.dirs.build.css))
         .pipe(livereload());
 });
