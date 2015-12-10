@@ -62,7 +62,7 @@ By default, `/assets` includes the following directories:
 
   * **main.scss**
 
-    The project's core stylesheet. Each file from the subfolders should be included within this file. Placing CSS in this file is not recommended.
+    The project's core stylesheet. Each file from the sub-folders should be included within this file. Placing CSS in this file is not recommended.
 
 ## Public
 
