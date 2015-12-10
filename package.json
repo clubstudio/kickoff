@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Kick start the development of a website or web application.",
   "main": "gulpfile.js",
-  "repository": "bitbucket:club/getup",
+  "repository": "bitbucket:club/kickoff",
   "devDependencies": {
     "del": "^1.1.1",
     "gulp": "^3.9.0",
