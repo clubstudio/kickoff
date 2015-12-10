@@ -1,6 +1,6 @@
 {
   "name": "club-kickoff",
-  "description": "Kick start the development of a website.",
+  "description": "Kick-start the development of a website or web application.",
   "license": "MIT",
   "ignore": [
     "**/.*",
