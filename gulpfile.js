@@ -67,8 +67,8 @@ gulp.task('sass', function () {
     return gulp.src(config.dirs.assets.sass + '/**/*.{scss,sass}')
         .pipe(sourcemaps.init())
         .pipe(sass({
-            errLogToConsole: true
-        }))
+            outputStyle: 'expanded'
+        }).on('error', sass.logError))
         .pipe(prefixer({
             browsers: ['last 2 versions', 'ie 8', 'ie 9']
         }))
@@ -166,12 +166,22 @@ gulp.task('rev', function () {
 gulp.task('watch', function () {
     livereload.listen();
 
-    gulp.watch(config.dirs.assets.sass + '/**/*.{scss,sass}', ['sass']);
-    gulp.watch(config.dirs.assets.js + '/**/*.js', ['uglify']);
-    gulp.watch(config.dirs.assets.img + '/**/*.{png,jpg,gif,svg}', ['imagemin']);
+    var options = { usePolling: true };
 
-    gulp.watch(config.dirs.templates + '/**/*.{html,twig,php}').on('change', function (file) {
-        livereload.changed(file.path);
+    watch(config.dirs.assets.sass + '/**/*.{scss,sass}', options, function () {
+        gulp.start('sass');
+    });
+
+    watch(config.dirs.assets.js + '/**/*.js', options, function () {
+        gulp.start('uglify');
+    });
+
+    watch(config.dirs.assets.img + '/**/*.{png,jpg,gif,svg}', options, function () {
+        gulp.start('imagemin');
+    });
+
+    watch(config.dirs.templates + '/**/*.{html,twig,php}', options, function (a) {
+        livereload.changed(a);
     });
 });
 
