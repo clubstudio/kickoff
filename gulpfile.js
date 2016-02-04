@@ -15,7 +15,7 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
     prefixer = require('gulp-autoprefixer'),
-    minifyCss = require('gulp-minify-css'),
+    cssnano = require('gulp-cssnano'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
     imagemin = require('gulp-imagemin'),
@@ -95,9 +95,7 @@ gulp.task('autoprefixer', function () {
 
 gulp.task('minify-css', function () {
     return gulp.src(config.dirs.build.css + '/**/*.css')
-        .pipe(minifyCss({
-            compatibility: 'ie8'
-        }))
+        .pipe(cssnano())
         .pipe(gulp.dest(config.dirs.build.css));
 });
 
