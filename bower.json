@@ -13,7 +13,7 @@
   ],
   "dependencies": {
     "getup": "git@bitbucket.org:club/getup.git#~3.0",
-    "jquery": "~1.11.2",
+    "jquery": "~1.12.2",
     "html5shiv": "~3.7.2",
     "respond-minmax": "~1.4.2"
   },
