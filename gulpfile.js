@@ -17,6 +17,7 @@ var gulp = require('gulp'),
     prefixer = require('gulp-autoprefixer'),
     cssnano = require('gulp-cssnano'),
     uglify = require('gulp-uglify'),
+    babel = require('gulp-babel'),
     concat = require('gulp-concat'),
     imagemin = require('gulp-imagemin'),
     pngquant = require('imagemin-pngquant'),
@@ -100,14 +101,21 @@ gulp.task('minify-css', function () {
 });
 
 /* --------------------------------------------------------------------------
- * Concatenate and minify Javascript
+ * Compile, concatenate and minify JavaScript
  * -------------------------------------------------------------------------- */
 
-gulp.task('uglify', function () {
+gulp.task('js', function () {
     for (var key in config.js) {
         gulp.src(config.js[key])
-            .pipe(uglify())
+            .pipe(sourcemaps.init())
+            .pipe(babel())
+            .pipe(
+                uglify().on('error', function (error) {
+                    console.log(error.message + ' on ' + error.lineNumber);
+                })
+            )
             .pipe(concat(key))
+            .pipe(sourcemaps.write())
             .pipe(gulp.dest(config.dirs.build.js));
     }
 
@@ -171,7 +179,7 @@ gulp.task('watch', function () {
     });
 
     watch(config.dirs.assets.js + '/**/*.js', options, function () {
-        gulp.start('uglify');
+        gulp.start('js');
     });
 
     watch(config.dirs.assets.img + '/**/*.{png,jpg,gif,svg}', options, function () {
@@ -200,7 +208,7 @@ gulp.task('build', function () {
         'clean',
         'copy-components',
         'copy-fonts',
-        ['sass', 'imagemin', 'uglify'],
+        ['sass', 'imagemin', 'js'],
         'autoprefixer',
         'minify-css',
         'rev'
@@ -220,7 +228,7 @@ gulp.task('default', function () {
         'clean',
         'copy-components',
         'copy-fonts',
-        ['sass', 'uglify', 'imagemin'],
+        ['sass', 'js', 'imagemin'],
         'watch'
     );
 });
