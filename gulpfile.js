@@ -70,7 +70,7 @@ gulp.task('sass', function () {
             outputStyle: 'expanded'
         }).on('error', sass.logError))
         .pipe(prefixer({
-            browsers: ['last 2 versions', 'ie 8', 'ie 9']
+            browsers: config.browserSupport
         }))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.dirs.build.css))
@@ -84,7 +84,7 @@ gulp.task('sass', function () {
 gulp.task('autoprefixer', function () {
     return gulp.src(config.dirs.build.css + '/**/*.css')
         .pipe(prefixer({
-            browsers: ['last 2 versions', 'ie 8', 'ie 9']
+            browsers: config.browserSupport
         }))
         .pipe(gulp.dest(config.dirs.build.css));
 });

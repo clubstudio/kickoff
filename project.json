@@ -9,6 +9,8 @@
       "vendor/bower_components/fontawesome/fonts/**/*"
     ],
 
+    "browser_support": ["last 2 versions", "ie 8", "ie 9"],
+
     "js": {
         "main.js": [
             "resources/assets/js/main.js"
