@@ -67,9 +67,12 @@ gulp.task('copy-fonts', function () {
 gulp.task('sass', function () {
     return gulp.src(config.dirs.assets.sass + '/**/*.{scss,sass}')
         .pipe(sourcemaps.init())
-        .pipe(sass({
-            outputStyle: 'expanded'
-        }).on('error', sass.logError))
+        .pipe(
+            sass({
+                outputStyle: 'expanded'
+            })
+            .on('error', sass.logError)
+        )
         .pipe(prefixer({
             browsers: config.browserSupport
         }))
