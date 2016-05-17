@@ -4,7 +4,9 @@ Kick start the development of a website or web application.
 
 ## Getting Started
 
-Either clone this repo, or utilise the bash alias detailed below. If you plan on using any of the preconfigured Gulp tasks, make sure you run `npm install` first - this will pull in any required dependencies.
+Either clone this repo, or utilise the bash alias detailed below. 
+
+If you plan on using any of the preconfigured Gulp tasks, make sure you run `npm install` (and possibly `bower install` if neccessary) first - this will pull in any required dependencies.
 
 That's it! You're good to go.
 
@@ -52,13 +54,17 @@ By default, `/assets` includes the following directories:
 
   * **/helpers**
 
-    Mixins and functions should be placed here. By default blank `_mixins.scss` and `_funcions.scss` files are included for convenience.
+    Mixins and functions should be placed here. By default blank `_mixins.scss` and `_functions.scss` files are included for convenience.
+    
+  * **/layout**
+  
+  	The home for any major structural styles, such as headers and footers.
 
   * **/vendor**
 
       `_getup.scss` - A single point for pulling in Club Getup files.
 
-    This would generally contain any vendor styles that need to manually be included, because they're not available via Bower.
+    This would generally contain any vendor styles that need to manually be included, because they're not available via Bower or NPM.
 
   * **main.scss**
 
@@ -145,7 +151,7 @@ This task will run the following gulp tasks: `copy-components`, `sass`, `autopre
 
 ### bower.json
 
-Defines the default Bower dependencies. These are jQuery and HTML5shiv.
+Defines the default Bower dependencies, which are jQuery and HTML5shiv by default.
 
 ### package.json
 
