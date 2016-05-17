@@ -12,7 +12,7 @@ That's it! You're good to go.
 
 ## Alias
 
-To conveniently use this repo, I recommend adding the following alias to your .bash_aliases file:
+To conveniently use this repo, I recommend adding the following alias to your prompt:
 
 ```
 function kickoff() {
@@ -42,11 +42,11 @@ By default, `/assets` includes the following directories:
 * **/sass**
   * **/base**
 
-    `_base.scss` - None layout, theme specific style go here.
+    `_base.scss` - None layout, theme specific styles go here.
 
   * **/config**
 
-    `_config.scss` - Define any SASS variables for use throughout the project in this file.
+    `_base.scss` - Define any variables for use throughout the project in this file.
 
   * **/components**
 
@@ -90,7 +90,7 @@ Settings to normalise line endings within the Git repository.
 
 Project specific files and folders to be ignored. The contents of this file is minimal because the majority of standard ignores should be set within a global .gitignore file.
 
-If there isn't a global .gitignore file setup, here are some example additional entries for this file:
+If there isn't a global `.gitignore` file setup, here are some example additional entries for this file:
 
 ```
 # OS Files
@@ -120,7 +120,7 @@ Copies bower dependencies (as defined in `project.son`) from the `vendor/bower_c
 
 Compiles SASS/SCSS from `resources/assets/sass` to CSS in `public/css`.
 
-##### autoprefixer ([gulp-autoprefixer]())
+##### autoprefix ([gulp-autoprefixer]())
 
 Automatically adds vendor prefixes to compiled CSS.
 
