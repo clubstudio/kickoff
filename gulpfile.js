@@ -44,20 +44,14 @@ gulp.task('clean', function () {
 });
 
 /* --------------------------------------------------------------------------
- * Copy and minify any bower components
+ * Copy any components
  * -------------------------------------------------------------------------- */
 
 gulp.task('copy-components', function () {
-    return gulp.src(config.components, {
-            cwd: config.dirs.components
-        })
-        .pipe(uglify())
-        .pipe(gulp.dest(config.dirs.build.js + '/vendor'));
-});
-
-gulp.task('copy-fonts', function () {
-    return gulp.src(config.fonts)
-        .pipe(gulp.dest(config.dirs.build.root + '/fonts'));
+    for (var directory in config.components) {
+        gulp.src(config.components[directory])
+            .pipe(gulp.dest(config.dirs.build.root + '/' + directory));
+    }
 });
 
 /* ---------------------------------------------------------------------------
@@ -85,7 +79,7 @@ gulp.task('sass', function () {
  * Add vendor prefixes to compiled css
  * -------------------------------------------------------------------------- */
 
-gulp.task('autoprefixer', function () {
+gulp.task('autoprefix', function () {
     return gulp.src(config.dirs.build.css + '/**/*.css')
         .pipe(prefixer({
             browsers: config.browserSupport
@@ -210,9 +204,8 @@ gulp.task('build', function () {
     return sequence(
         'clean',
         'copy-components',
-        'copy-fonts',
         ['sass', 'imagemin', 'js'],
-        'autoprefixer',
+        'autoprefix',
         'minify-css',
         'rev'
     );
@@ -230,7 +223,6 @@ gulp.task('default', function () {
     return sequence(
         'clean',
         'copy-components',
-        'copy-fonts',
         ['sass', 'js', 'imagemin'],
         'watch'
     );
