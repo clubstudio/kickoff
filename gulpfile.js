@@ -76,7 +76,7 @@ gulp.task('sass', function () {
 });
 
 /* --------------------------------------------------------------------------
- * Add vendor prefixes to compiled css
+ * Add vendor prefixes to compiled CSS
  * -------------------------------------------------------------------------- */
 
 gulp.task('autoprefix', function () {

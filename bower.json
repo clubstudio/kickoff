@@ -1,24 +1,24 @@
 {
-  "name": "club-kickoff",
-  "description": "Kick-start the development of a website or web application.",
-  "license": "MIT",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "vendor/bower_components",
-    "tests"
-  ],
-  "authors": [
-    "Club Studio Ltd <dev@clubstudio.co.uk>"
-  ],
-  "dependencies": {
-    "getup": "git@bitbucket.org:club/getup.git#~3.0",
-    "jquery": "~1.12.2",
-    "html5shiv": "~3.7.2",
-    "respond-minmax": "~1.4.2"
-  },
-  "devDependencies": {
+    "name": "club-kickoff",
+    "description": "Kick-start the development of a website or web application.",
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "vendor/bower_components",
+        "tests"
+    ],
+    "authors": [
+        "Club Studio Ltd <dev@clubstudio.co.uk>"
+    ],
+    "dependencies": {
+        "getup": "git@bitbucket.org:club/getup.git#~3.0",
+        "jquery": "~1.12.2",
+        "html5shiv": "~3.7.2",
+        "respond-minmax": "~1.4.2"
+    },
+    "devDependencies": {
 
-  },
-  "private": true
+    },
+    "private": true
 }
