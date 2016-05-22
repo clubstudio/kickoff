@@ -15,7 +15,7 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
     prefixer = require('gulp-autoprefixer'),
-    cssnano = require('gulp-cssnano'),
+    cleanCSS = require('gulp-clean-css'),
     uglify = require('gulp-uglify'),
     babel = require('gulp-babel'),
     concat = require('gulp-concat'),
@@ -93,7 +93,9 @@ gulp.task('autoprefix', function () {
 
 gulp.task('minify-css', function () {
     return gulp.src(config.dirs.build.css + '/**/*.css')
-        .pipe(cssnano())
+        .pipe(cleanCSS({
+            compatibility: 'ie8'
+        }))
         .pipe(gulp.dest(config.dirs.build.css));
 });
 
