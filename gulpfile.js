@@ -217,7 +217,7 @@ gulp.task('build', function () {
  * Default Task
  *     1. Cleans any previously built assets
  *     2. Copies any required dependencies
- *     3. Builds the development versions of any css, javascript or images
+ *     3. Builds the development versions of any CSS, JavaScript or images
  *     4. Watches for any changes...
  * -------------------------------------------------------------------------- */
 
