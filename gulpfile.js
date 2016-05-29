@@ -191,9 +191,25 @@ gulp.task('watch', function () {
 });
 
 /* --------------------------------------------------------------------------
+ * Dev Task
+ *     1. Removes any previously built assets
+ *     2. Copies files/directories
+ *     3. Compiles CSS
+ *     4. Builds JS files
+ * -------------------------------------------------------------------------- */
+
+gulp.task('dev', function () {
+    return sequence(
+        'clean',
+        'copy-components',
+        ['sass', 'imagemin', 'js']
+    );
+});
+
+/* --------------------------------------------------------------------------
  * Build - Builds all assets ready for production
  *     1. Removes any previously built assets
- *     2. Copies any required dependencies
+ *     2. Copies files/directories
  *     3. Compiles CSS
  *     4. Applies any vendor prefixes
  *     5. Minifies CSS
@@ -223,9 +239,7 @@ gulp.task('build', function () {
 
 gulp.task('default', function () {
     return sequence(
-        'clean',
-        'copy-components',
-        ['sass', 'js', 'imagemin'],
+        'dev',
         'watch'
     );
 });
