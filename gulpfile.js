@@ -18,6 +18,7 @@ var del = require('del'),
     watch = require('gulp-watch'),
     babel = require('gulp-babel'),
     concat = require('gulp-concat'),
+    eslint = require('gulp-eslint'),
     uglify = require('gulp-uglify'),
     sequence = require('run-sequence'),
     imagemin = require('gulp-imagemin'),
@@ -111,6 +112,17 @@ gulp.task('minify-css', function () {
  * Compile, concatenate and minify JavaScript
  * -------------------------------------------------------------------------- */
 
+gulp.task('eslint', function () {
+    return gulp.src([config.dirs.assets.js + '/**/*.js'])
+               .pipe(eslint({
+                   options: {
+                       useEslintrc: true
+                   }
+               }))
+               .pipe(eslint.format())
+               .pipe(eslint.failAfterError());
+});
+
 gulp.task('js', function () {
     for (var key in config.js) {
         gulp.src(config.js[key])
@@ -186,7 +198,7 @@ gulp.task('watch', function () {
     });
 
     watch(config.dirs.assets.js + '/**/*.js', options, function () {
-        gulp.start('js');
+        gulp.start(['eslint', 'js']);
     });
 
     watch(config.dirs.assets.img + '/**/*.{png,jpg,gif,svg}', options, function () {
@@ -210,7 +222,7 @@ gulp.task('dev', function () {
     return sequence(
         'clean',
         'copy-components',
-        ['sass', 'imagemin', 'js']
+        ['sass', 'imagemin', 'eslint', 'js']
     );
 });
 
@@ -230,7 +242,7 @@ gulp.task('build', function () {
     return sequence(
         'clean',
         'copy-components',
-        ['sass', 'imagemin', 'js'],
+        ['sass', 'imagemin', 'eslint', 'js'],
         'autoprefix',
         'minify-css',
         'rev'
