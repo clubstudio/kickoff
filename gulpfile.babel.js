@@ -1,47 +1,44 @@
-'use strict';
-
 /* --------------------------------------------------------------------------
  * Get project configuration
  * -------------------------------------------------------------------------- */
 
-var config = require('./project.json');
+const config = require('./project.json');
 
 /* --------------------------------------------------------------------------
- * Require Tasks
+ * Import Required Modules
  * -------------------------------------------------------------------------- */
 
-var del = require('del'),
-    gulp = require('gulp'),
-    path = require('path'),
-    rev = require('gulp-rev'),
-    jscs = require('gulp-jscs'),
-    sass = require('gulp-sass'),
-    watch = require('gulp-watch'),
-    babel = require('gulp-babel'),
-    concat = require('gulp-concat'),
-    eslint = require('gulp-eslint'),
-    uglify = require('gulp-uglify'),
-    sequence = require('run-sequence'),
-    imagemin = require('gulp-imagemin'),
-    sassLint = require('gulp-sass-lint'),
-    cleanCSS = require('gulp-clean-css'),
-    revNapkin = require('gulp-rev-napkin'),
-    override = require('gulp-rev-css-url'),
-    prefixer = require('gulp-autoprefixer'),
-    sourcemaps = require('gulp-sourcemaps'),
-    pngquant = require('imagemin-pngquant'),
-    livereload = require('gulp-livereload');
+import del from 'del';
+import gulp from 'gulp';
+import path from 'path';
+import rev from 'gulp-rev';
+import jscs from 'gulp-jscs';
+import sass from 'gulp-sass';
+import watch from 'gulp-watch';
+import babel from 'gulp-babel';
+import concat from 'gulp-concat';
+import eslint from 'gulp-eslint';
+import uglify from 'gulp-uglify';
+import sequence from 'run-sequence';
+import imagemin from 'gulp-imagemin';
+import sassLint from 'gulp-sass-lint';
+import cleanCSS from 'gulp-clean-css';
+import revNapkin from 'gulp-rev-napkin';
+import revCssUrl from 'gulp-rev-css-url';
+import prefixer from 'gulp-autoprefixer';
+import sourcemaps from 'gulp-sourcemaps';
+import pngquant from 'imagemin-pngquant';
+import livereload from 'gulp-livereload';
 
 /* --------------------------------------------------------------------------
  * Clear any previously built files before rebuilding assets
  * -------------------------------------------------------------------------- */
 
-gulp.task('clean', function () {
+gulp.task('clean', () => {
     return del.sync([
         config.dirs.build.css,
         config.dirs.build.js,
         config.dirs.build.img,
-        config.dirs.build.root + '/fonts',
         config.manifest.path + '/' + config.manifest.filename
     ]);
 });
@@ -50,8 +47,8 @@ gulp.task('clean', function () {
  * Copy any components
  * -------------------------------------------------------------------------- */
 
-gulp.task('copy-components', function () {
-    for (var directory in config.components) {
+gulp.task('copy-components', () => {
+    for (let directory in config.components) {
         gulp.src(config.components[directory])
             .pipe(gulp.dest(config.dirs.build.root + '/' + directory));
     }
@@ -61,7 +58,7 @@ gulp.task('copy-components', function () {
  * Compile SASS into CSS
  * -------------------------------------------------------------------------- */
 
-gulp.task('sass', function () {
+gulp.task('sass', () => {
     return gulp.src(config.dirs.assets.sass + '/**/*.{scss,sass}')
         .pipe(sassLint({
             options: {
@@ -89,7 +86,7 @@ gulp.task('sass', function () {
  * Add vendor prefixes to compiled CSS
  * -------------------------------------------------------------------------- */
 
-gulp.task('autoprefix', function () {
+gulp.task('autoprefix', () => {
     return gulp.src(config.dirs.build.css + '/**/*.css')
         .pipe(prefixer({
             browsers: config.browserSupport
@@ -101,7 +98,7 @@ gulp.task('autoprefix', function () {
  * Minify all CSS files
  * -------------------------------------------------------------------------- */
 
-gulp.task('minify-css', function () {
+gulp.task('minify-css', () => {
     return gulp.src(config.dirs.build.css + '/**/*.css')
         .pipe(cleanCSS({
             compatibility: 'ie8'
@@ -113,7 +110,7 @@ gulp.task('minify-css', function () {
  * Lint JavaScript with ESLint
  * -------------------------------------------------------------------------- */
 
-gulp.task('eslint', function () {
+gulp.task('eslint', () => {
     return gulp.src([config.dirs.assets.js + '/**/*.js'])
                .pipe(eslint({
                    options: {
@@ -128,7 +125,7 @@ gulp.task('eslint', function () {
  * Check JavaScript code style with JSCS
  * -------------------------------------------------------------------------- */
 
-gulp.task('jscs', function () {
+gulp.task('jscs', () => {
     return gulp.src(config.dirs.assets.js + '/**/*.js')
                .pipe(jscs({ fix: true }))
                .pipe(jscs.reporter())
@@ -139,13 +136,13 @@ gulp.task('jscs', function () {
  * Compile, concatenate and minify JavaScript
  * -------------------------------------------------------------------------- */
 
-gulp.task('js', function () {
-    for (var key in config.js) {
+gulp.task('js', () => {
+    for (let key in config.js) {
         gulp.src(config.js[key])
             .pipe(sourcemaps.init())
             .pipe(babel())
             .pipe(
-                uglify().on('error', function (error) {
+                uglify().on('error', (error) => {
                     console.log(error.message + ' on ' + error.lineNumber);
                 })
             )
@@ -161,7 +158,7 @@ gulp.task('js', function () {
  * Optimise images
  * -------------------------------------------------------------------------- */
 
-gulp.task('imagemin', function () {
+gulp.task('imagemin', () => {
     return gulp.src(config.dirs.assets.img + '/**/*')
         .pipe(imagemin({
             progressive: true,
@@ -182,7 +179,7 @@ gulp.task('imagemin', function () {
  *     3. Generate assets manifest file
  * -------------------------------------------------------------------------- */
 
-gulp.task('rev', function () {
+gulp.task('rev', () => {
     return gulp.src(
             [
                 config.dirs.build.css + '/**/*.css',
@@ -193,7 +190,7 @@ gulp.task('rev', function () {
             }
         )
         .pipe(rev())
-        .pipe(override())
+        .pipe(revCssUrl())
         .pipe(gulp.dest(config.dirs.build.root))
         .pipe(revNapkin())
         .pipe(rev.manifest(config.manifest.filename))
@@ -204,24 +201,24 @@ gulp.task('rev', function () {
  * Watch for any file changes
  * -------------------------------------------------------------------------- */
 
-gulp.task('watch', function () {
-    var options = { usePolling: true };
+gulp.task('watch', () => {
+    let options = { usePolling: true };
 
     livereload.listen();
 
-    watch(config.dirs.assets.sass + '/**/*.{scss,sass}', options, function () {
+    watch(config.dirs.assets.sass + '/**/*.{scss,sass}', options, () => {
         gulp.start('sass');
     });
 
-    watch(config.dirs.assets.js + '/**/*.js', options, function () {
+    watch(config.dirs.assets.js + '/**/*.js', options, () => {
         gulp.start(['eslint', 'jscs', 'js']);
     });
 
-    watch(config.dirs.assets.img + '/**/*.{png,jpg,gif,svg}', options, function () {
+    watch(config.dirs.assets.img + '/**/*.{png,jpg,gif,svg}', options, () => {
         gulp.start('imagemin');
     });
 
-    watch(config.dirs.templates + '/**/*.{html,twig,php}', options, function (a) {
+    watch(config.dirs.templates + '/**/*.{html,twig,php}', options, (a) => {
         livereload.changed(a);
     });
 });
@@ -234,7 +231,7 @@ gulp.task('watch', function () {
  *     4. Builds JS files
  * -------------------------------------------------------------------------- */
 
-gulp.task('dev', function () {
+gulp.task('dev', () => {
     return sequence(
         'clean',
         'copy-components',
@@ -254,7 +251,7 @@ gulp.task('dev', function () {
  *     8. Add hashes to asset filenames
  * -------------------------------------------------------------------------- */
 
-gulp.task('build', function () {
+gulp.task('build', () => {
     return sequence(
         'clean',
         'copy-components',
@@ -273,7 +270,7 @@ gulp.task('build', function () {
  *     4. Watches for any changes...
  * -------------------------------------------------------------------------- */
 
-gulp.task('default', function () {
+gulp.task('default', () => {
     return sequence(
         'dev',
         'watch'
