@@ -14,6 +14,7 @@ var del = require('del'),
     gulp = require('gulp'),
     path = require('path'),
     rev = require('gulp-rev'),
+    jscs = require('gulp-jscs'),
     sass = require('gulp-sass'),
     watch = require('gulp-watch'),
     babel = require('gulp-babel'),
@@ -124,6 +125,17 @@ gulp.task('eslint', function () {
 });
 
 /* --------------------------------------------------------------------------
+ * Check JavaScript code style with JSCS
+ * -------------------------------------------------------------------------- */
+
+gulp.task('jscs', function () {
+    return gulp.src(config.dirs.assets.js + '/**/*.js')
+               .pipe(jscs({ fix: true }))
+               .pipe(jscs.reporter())
+               .pipe(gulp.dest(config.dirs.assets.js));
+});
+
+/* --------------------------------------------------------------------------
  * Compile, concatenate and minify JavaScript
  * -------------------------------------------------------------------------- */
 
@@ -193,16 +205,16 @@ gulp.task('rev', function () {
  * -------------------------------------------------------------------------- */
 
 gulp.task('watch', function () {
-    livereload.listen();
-
     var options = { usePolling: true };
+
+    livereload.listen();
 
     watch(config.dirs.assets.sass + '/**/*.{scss,sass}', options, function () {
         gulp.start('sass');
     });
 
     watch(config.dirs.assets.js + '/**/*.js', options, function () {
-        gulp.start(['eslint', 'js']);
+        gulp.start(['eslint', 'jscs', 'js']);
     });
 
     watch(config.dirs.assets.img + '/**/*.{png,jpg,gif,svg}', options, function () {
@@ -226,7 +238,7 @@ gulp.task('dev', function () {
     return sequence(
         'clean',
         'copy-components',
-        ['sass', 'imagemin', 'eslint', 'js']
+        ['sass', 'imagemin', 'eslint', 'jscs', 'js']
     );
 });
 
@@ -246,7 +258,7 @@ gulp.task('build', function () {
     return sequence(
         'clean',
         'copy-components',
-        ['sass', 'imagemin', 'eslint', 'js'],
+        ['sass', 'imagemin', 'eslint', 'jscs', 'js'],
         'autoprefix',
         'minify-css',
         'rev'
