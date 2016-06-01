@@ -109,7 +109,7 @@ gulp.task('minify-css', function () {
 });
 
 /* --------------------------------------------------------------------------
- * Compile, concatenate and minify JavaScript
+ * Lint JavaScript with ESLint
  * -------------------------------------------------------------------------- */
 
 gulp.task('eslint', function () {
@@ -122,6 +122,10 @@ gulp.task('eslint', function () {
                .pipe(eslint.format())
                .pipe(eslint.failAfterError());
 });
+
+/* --------------------------------------------------------------------------
+ * Compile, concatenate and minify JavaScript
+ * -------------------------------------------------------------------------- */
 
 gulp.task('js', function () {
     for (var key in config.js) {
