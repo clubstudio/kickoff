@@ -58,7 +58,7 @@ rules:
   leading-zero: 1
   nesting-depth: 1
   property-sort-order:
-    - 2
+    - 1
     -
       order:
         - position
