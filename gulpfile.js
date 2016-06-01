@@ -10,23 +10,24 @@ var config = require('./project.json');
  * Require Tasks
  * -------------------------------------------------------------------------- */
 
-var gulp = require('gulp'),
-    del = require('del'),
+var del = require('del'),
+    gulp = require('gulp'),
+    path = require('path'),
+    rev = require('gulp-rev'),
     sass = require('gulp-sass'),
-    sourcemaps = require('gulp-sourcemaps'),
-    prefixer = require('gulp-autoprefixer'),
-    cleanCSS = require('gulp-clean-css'),
-    uglify = require('gulp-uglify'),
+    watch = require('gulp-watch'),
     babel = require('gulp-babel'),
     concat = require('gulp-concat'),
+    uglify = require('gulp-uglify'),
+    sequence = require('run-sequence'),
     imagemin = require('gulp-imagemin'),
-    pngquant = require('imagemin-pngquant'),
-    rev = require('gulp-rev'),
-    path = require('path'),
+    sassLint = require('gulp-sass-lint'),
+    cleanCSS = require('gulp-clean-css'),
     revNapkin = require('gulp-rev-napkin'),
     override = require('gulp-rev-css-url'),
-    sequence = require('run-sequence'),
-    watch = require('gulp-watch'),
+    prefixer = require('gulp-autoprefixer'),
+    sourcemaps = require('gulp-sourcemaps'),
+    pngquant = require('imagemin-pngquant'),
     livereload = require('gulp-livereload');
 
 /* --------------------------------------------------------------------------
@@ -60,6 +61,13 @@ gulp.task('copy-components', function () {
 
 gulp.task('sass', function () {
     return gulp.src(config.dirs.assets.sass + '/**/*.{scss,sass}')
+        .pipe(sassLint({
+            options: {
+                configFile: '.sass-lint.yml'
+            }
+        }))
+        .pipe(sassLint.format())
+        .pipe(sassLint.failOnError())
         .pipe(sourcemaps.init())
         .pipe(
             sass({
