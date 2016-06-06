@@ -1,6 +1,6 @@
 # Kickoff
 
-Kick start the development of a website or web application.
+Kick start the development of a website or web application. Hit the ground running with pre-configured Gulp tasks, linter configurations, a sensible directory structure and default meta files.
 
 ## Getting Started
 
@@ -9,6 +9,10 @@ Either clone this repo, or utilise the bash alias detailed below.
 If you plan on using any of the preconfigured Gulp tasks, make sure you run `npm install` (and possibly `bower install` if neccessary) first - this will pull in any required dependencies.
 
 That's it! You're good to go.
+
+## Installer
+
+Check out the [Kickoff Installer](https://github.com/clubstudioltd/kickoff-installer) package for a convenient way to start new web projects, with or without Kickoff.
 
 ## Alias
 
