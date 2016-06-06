@@ -11,6 +11,6 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "vlucas/phpdotenv": "~1.1.0"
+        "vlucas/phpdotenv": "~2.0"
     }
 }
