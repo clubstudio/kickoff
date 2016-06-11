@@ -25,11 +25,11 @@ watchForChanges = () => {
     });
 
     watch(config.dirs.assets.js + '/**/*.js', options, () => {
-        return sequence(['eslint', 'jscs'], 'js');
+        return sequence(['js-lint', 'js-codestyle'], 'js');
     });
 
     watch(config.dirs.assets.img + '/**/*.{png,jpg,gif,svg}', options, () => {
-        gulp.start('imagemin');
+        gulp.start('images');
     });
 
     watch(config.dirs.templates + '/**/*.{html,twig,php}', options, (a) => {
