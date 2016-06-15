@@ -11,12 +11,7 @@ minifyImages = () => {
     imagemin = require('gulp-imagemin');
 
     return gulp.src(config.dirs.assets.img + '/**/*')
-        .pipe(imagemin({
-            progressive: true,
-            svgoPlugins: [{
-                removeViewBox: false
-            }]
-        }))
+        .pipe(imagemin([], { verbose: true }))
         .pipe(gulp.dest(config.dirs.build.img));
 }
 
