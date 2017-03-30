@@ -25,7 +25,7 @@ watchForChanges = () => {
     });
 
     watch(config.dirs.assets.js + '/**/*.js', options, () => {
-        return sequence(['js-lint', 'js-codestyle'], 'js');
+        return sequence('js-lint', 'js');
     });
 
     watch(config.dirs.assets.img + '/**/*.{png,jpg,gif,svg}', options, () => {

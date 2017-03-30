@@ -24,9 +24,9 @@ gulp.task('dev', () => {
     return sequence(
         'clean',
         ['copy-components', 'images'],
-        // 'sass-lint',
+        'sass-lint',
         'sass',
-        ['js-lint', 'js-codestyle'],
+        'js-lint',
         'js'
     );
 });
@@ -51,7 +51,7 @@ gulp.task('production', () => {
         'sass',
         'css-autoprefix',
         'css-minify',
-        ['js-lint', 'js-codestyle'],
+        'js-lint',
         'js',
         'rev'
     );

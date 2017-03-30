@@ -7,10 +7,14 @@
         }
     },
     "env": {
-        "browser": true
+        "browser": true,
+        "es6": true,
+        "jquery": true
     },
     "globals": {
+
     },
+    "extends": "crockford",
     "rules": {
         "quotes": [2, "single"]
     }
