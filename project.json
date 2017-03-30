@@ -12,10 +12,6 @@
     "js": {
         "main.js": [
             "resources/assets/js/main.js"
-        ],
-        "head.js": [
-            "vendor/bower_components/html5shiv/dist/html5shiv.js",
-            "vendor/bower_components/respond-minmax/dest/respond.min.js"
         ]
     },
 
