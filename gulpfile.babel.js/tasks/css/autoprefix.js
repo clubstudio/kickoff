@@ -12,7 +12,7 @@ autoprefix = () => {
 
     return gulp.src(config.dirs.build.css + '/**/*.css')
         .pipe(prefixer({
-            browsers: config.browserSupport
+            browsers: config.browser_support
         }))
         .pipe(gulp.dest(config.dirs.build.css));
 };
