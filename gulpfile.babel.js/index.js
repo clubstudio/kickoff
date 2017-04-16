@@ -38,9 +38,10 @@ gulp.task('dev', () => {
  *     3. Compiles CSS
  *     4. Applies any vendor prefixes
  *     5. Minifies CSS
- *     6. Builds JS files
- *     7. Optimises images
- *     8. Add hashes to asset filenames
+ *     6. Extracts Critical CSS
+ *     7. Builds JS files
+ *     8. Optimises images
+ *     9. Add hashes to asset filenames
  * -------------------------------------------------------------------------- */
 
 gulp.task('production', () => {
@@ -51,6 +52,7 @@ gulp.task('production', () => {
         'sass',
         'css-autoprefix',
         'css-minify',
+        'css-critical',
         'js-lint',
         'js',
         'rev'

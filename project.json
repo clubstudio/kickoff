@@ -1,6 +1,8 @@
 {
     "name" : "kickoff",
 
+    "url": "http://kickoff.dev",
+
     "components": {
         "js/vendor": [
             "node_modules/jquery/dist/jquery.min.js"
@@ -8,6 +10,15 @@
     },
 
     "browser_support": ["last 2 versions"],
+
+    "critical": {
+        "mappings": [
+            { "url": "", "template": "index" }
+        ],
+        "use": [
+            "public/css/main.css"
+        ]
+    },
 
     "js": {
         "main.js": [
