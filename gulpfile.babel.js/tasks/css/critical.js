@@ -14,7 +14,7 @@ const loadPlugins = function () {
 criticalCSS = (callback) => {
     loadPlugins();
 
-    doSynchronousLoop(config.critical, processCriticalCSS, () => {
+    doSynchronousLoop(config.critical.mappings, processCriticalCSS, () => {
         callback();
     });
 }
@@ -47,7 +47,7 @@ function processCriticalCSS(element, i, callback) {
         ignore: [],
         base: config.dirs.build.root + '/',
         pathPrefix: '/',
-        css: config.css,
+        css: config.critical.use,
         minify: true,
         width: 1200,
         height: 1200
