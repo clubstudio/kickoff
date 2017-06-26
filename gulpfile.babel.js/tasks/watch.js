@@ -5,12 +5,14 @@
 import gulp from 'gulp';
 import config from '../../project.json';
 
-let watchForChanges, livereload, sequence, watch;
+let watchForChanges, livereload, sequence, watch, args, twig;
 
 const loadPlugins = () => {
     livereload = require('gulp-livereload');
     sequence = require('run-sequence');
     watch = require('gulp-watch');
+    args = require('yargs').argv;
+    twig = require('gulp-twig');
 };
 
 watchForChanges = () => {
@@ -33,6 +35,13 @@ watchForChanges = () => {
     });
 
     watch(config.dirs.templates + '/**/*.{html,twig,php}', options, (a) => {
+        if (args.env === 'twig') {
+            console.log('compile twig templates...');
+            gulp.src([config.dirs.templates + '/**/*.html', '!' + config.dirs.templates + '/_**/*'])
+                .pipe(twig())
+                .pipe(gulp.dest('public'));
+        }
+
         livereload.changed(a);
     });
 }
