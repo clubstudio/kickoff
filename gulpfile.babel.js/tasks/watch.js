@@ -36,10 +36,10 @@ watchForChanges = () => {
 
     watch(config.dirs.templates + '/**/*.{html,twig,php}', options, (a) => {
         if (args.env === 'twig') {
-            console.log('compile twig templates...');
             gulp.src([config.dirs.templates + '/**/*.html', '!' + config.dirs.templates + '/_**/*'])
                 .pipe(twig({
-                    base: 'resources/templates/'
+                    base: 'resources/templates/',
+                    errorLogToConsole: true
                 }))
                 .pipe(gulp.dest('public'));
         }
