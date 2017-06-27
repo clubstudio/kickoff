@@ -35,13 +35,15 @@ watchForChanges = () => {
     });
 
     watch(config.dirs.templates + '/**/*.{html,twig,php}', options, (a) => {
-        if (args.env === 'twig') {
+        if (args.twig) {
+            console.log('Compiling Templates...');
             gulp.src([config.dirs.templates + '/**/*.html', '!' + config.dirs.templates + '/_**/*'])
                 .pipe(twig({
                     base: 'resources/templates/',
                     errorLogToConsole: true
                 }))
                 .pipe(gulp.dest('public'));
+            console.log('Done.');
         }
 
         livereload.changed(a);
