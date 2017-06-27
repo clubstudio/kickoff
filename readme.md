@@ -14,6 +14,16 @@ Please refer to the [Kickoff Wiki](https://github.com/clubstudioltd/kickoff/wiki
 6. [Linting](https://github.com/clubstudioltd/kickoff/wiki/06.-Linting)
 7. [Gulp Tasks](https://github.com/clubstudioltd/kickoff/wiki/07.-Gulp-Tasks)
 
+## Twig Template Compilation
+
+You can use Kickoff to quickly start building out frontend templates. The use of Twig allows you to organise your templates into partials etc.
+
+Use to `--compileTemplates` flag on the `gulp`, `gulp production` and `gulp watch` commands to ensure your templates within the `templates` directory are compiled and output to the public directory.
+
+Compile your templates manually using the `gulp compile-templates` task.
+
+*Note:* Directories that start with an underscore `_` will be ignored and their contents will not be compiled.
+
 ## Kickoff Installer
 
 Check out the [Kickoff Installer](https://github.com/clubstudioltd/kickoff-installer) package for a convenient way to start new web projects, with or without Kickoff.

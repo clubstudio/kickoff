@@ -39,7 +39,7 @@
             "img": "resources/assets/img",
             "js": "resources/assets/js"
         },
-        "templates": "resources/views",
+        "templates": "resources/templates",
         "build": {
             "root": "public",
             "css": "public/css",

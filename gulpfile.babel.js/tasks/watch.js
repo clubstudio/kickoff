@@ -5,12 +5,14 @@
 import gulp from 'gulp';
 import config from '../../project.json';
 
-let watchForChanges, livereload, sequence, watch;
+let watchForChanges, livereload, sequence, watch, args, twig;
 
 const loadPlugins = () => {
     livereload = require('gulp-livereload');
     sequence = require('run-sequence');
     watch = require('gulp-watch');
+    args = require('yargs').argv;
+    twig = require('gulp-twig');
 };
 
 watchForChanges = () => {
@@ -33,8 +35,12 @@ watchForChanges = () => {
     });
 
     watch(config.dirs.templates + '/**/*.{html,twig,php}', options, (a) => {
+        if (args.compileTemplates) {
+            gulp.start('compile-templates');
+        }
+
         livereload.changed(a);
     });
 }
 
-gulp.task('watch', watchForChanges);
+gulp.task('watcher', watchForChanges);
