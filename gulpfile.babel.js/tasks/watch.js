@@ -35,19 +35,12 @@ watchForChanges = () => {
     });
 
     watch(config.dirs.templates + '/**/*.{html,twig,php}', options, (a) => {
-        if (args.twig) {
-            console.log('Compiling Templates...');
-            gulp.src([config.dirs.templates + '/**/*.html', '!' + config.dirs.templates + '/_**/*'])
-                .pipe(twig({
-                    base: 'resources/templates/',
-                    errorLogToConsole: true
-                }))
-                .pipe(gulp.dest('public'));
-            console.log('Done.');
+        if (args.compileTemplates) {
+            gulp.start('compile-templates');
         }
 
         livereload.changed(a);
     });
 }
 
-gulp.task('watch', watchForChanges);
+gulp.task('watcher', watchForChanges);
