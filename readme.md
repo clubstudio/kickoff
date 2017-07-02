@@ -18,7 +18,7 @@ Please refer to the [Kickoff Wiki](https://github.com/clubstudioltd/kickoff/wiki
 
 You can use Kickoff to quickly start building out frontend templates. The use of Twig allows you to organise your templates into partials etc.
 
-Use to `--compileTemplates` flag on the `gulp`, `gulp production` and `gulp watch` commands to ensure your templates within the `templates` directory are compiled and output to the public directory.
+Use the `--compileTemplates` flag on the `gulp`, `gulp production` and `gulp watch` commands to ensure your templates within the `templates` directory are compiled and output to the public directory.
 
 Compile your templates manually using the `gulp compile-templates` task.
 
